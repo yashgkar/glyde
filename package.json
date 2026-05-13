@@ -33,6 +33,8 @@
     "build": "rollup -c rollup.config.js",
     "dev": "rollup -c rollup.config.js --watch",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "prepublishOnly": "npm run typecheck && npm run build"
   },
   "devDependencies": {
@@ -40,7 +42,8 @@
     "rollup": "^4.14.0",
     "rollup-plugin-dts": "^6.1.0",
     "tslib": "^2.6.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vitest": "^4.1.6"
   },
   "engines": {
     "node": ">=18.0.0"
