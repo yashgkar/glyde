@@ -1,11 +1,13 @@
 <p align="center">
-  <h1 align="center">glyde</h1>
+  <h1 align="center">✈️ glyde</h1>
   <p align="center">A lightweight, TypeScript-first HTTP client built on native <code>fetch</code>. Zero dependencies.</p>
 </p>
 
+> **[Full documentation and examples on GitHub](https://github.com/yashgkar/glyde)**
+
 <p align="center">
   <a href="https://www.npmjs.com/package/glyde"><img src="https://img.shields.io/npm/v/glyde" alt="npm version" /></a>
-  <a href="https://github.com/yashgarudkar/glyde/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/glyde" alt="license" /></a>
+  <a href="https://github.com/yashgkar/glyde/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/glyde" alt="license" /></a>
   <a href="https://www.npmjs.com/package/glyde"><img src="https://img.shields.io/bundlephobia/minzip/glyde" alt="bundle size" /></a>
   <img src="https://img.shields.io/badge/dependencies-0-green" alt="zero dependencies" />
 </p>
@@ -51,6 +53,53 @@ await api.post<User>("/users", { name: "Yash" })
 // With query params
 await api.get("/search", { params: { q: "glyde", page: 1 } })
 ```
+
+## Next.js App Router
+
+glyde is designed with Next.js in mind — but works anywhere fetch exists.
+
+### Server-side (tower)
+
+```ts
+// lib/api/server.ts
+import plane from "glyde"
+import { cookies } from "next/headers"
+
+export async function tower() {
+  const api = plane({ baseURL: process.env.API_BASE_URL })
+  const cookieStore = await cookies()
+
+  api.interceptors.request.use((config) => {
+    const token = cookieStore.get("access_token")?.value
+    if (token) {
+      config.headers = { ...config.headers, Authorization: `Bearer ${token}` }
+    }
+    return config
+  })
+
+  return api
+}
+```
+
+### Client-side (passenger)
+
+```ts
+// lib/api/client.ts
+"use client"
+import plane from "glyde"
+
+export const passenger = plane({ baseURL: "/api/proxy" })
+
+passenger.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error?.status === 401) window.location.href = "/login"
+    throw error
+  },
+)
+```
+
+> **Not using Next.js?** glyde works with Express, Nuxt, SvelteKit, Bun, Deno, Cloudflare Workers — anywhere `fetch` is available. The API is the same everywhere.
 
 ## API
 

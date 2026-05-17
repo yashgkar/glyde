@@ -1,6 +1,6 @@
 {
   "name": "glyde",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A lightweight, TypeScript-first HTTP client — zero dependencies. Built on native fetch.",
   "author": "Yash Garudkar <garudkary@gmail.com>",
   "license": "MIT",
