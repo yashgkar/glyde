@@ -1,17 +1,17 @@
-import type { RequestConfig, FliteResponse } from "./types"
+import type { RequestConfig, GlydeResponse } from "./types"
 
-export class FliteError extends Error {
+export class GlydeError extends Error {
   public readonly config: RequestConfig
-  public readonly response?: FliteResponse
+  public readonly response?: GlydeResponse
   public readonly status?: number
 
   constructor(
     message: string,
     config: RequestConfig,
-    response?: FliteResponse,
+    response?: GlydeResponse,
   ) {
     super(message)
-    this.name = "FliteError"
+    this.name = "GlydeError"
     this.config = config
     this.response = response
     this.status = response?.status
@@ -19,7 +19,7 @@ export class FliteError extends Error {
   }
 }
 
-export class TimeoutError extends FliteError {
+export class TimeoutError extends GlydeError {
   constructor(config: RequestConfig) {
     super(`Request timed out after ${config.timeout}ms`, config)
     this.name = "TimeoutError"
@@ -27,7 +27,7 @@ export class TimeoutError extends FliteError {
   }
 }
 
-export class NetworkError extends FliteError {
+export class NetworkError extends GlydeError {
   constructor(config: RequestConfig, originalCause?: unknown) {
     super("Network error — request could not be sent", config)
     this.name = "NetworkError"
@@ -40,16 +40,16 @@ export class NetworkError extends FliteError {
   }
 }
 
-export class HttpError extends FliteError {
-  constructor(config: RequestConfig, response: FliteResponse) {
+export class HttpError extends GlydeError {
+  constructor(config: RequestConfig, response: GlydeResponse) {
     super(`HTTP ${response.status}: ${response.statusText}`, config, response)
     this.name = "HttpError"
     Object.setPrototypeOf(this, new.target.prototype)
   }
 }
 
-export function isFliteError(error: unknown): error is FliteError {
-  return error instanceof FliteError
+export function isGlydeError(error: unknown): error is GlydeError {
+  return error instanceof GlydeError
 }
 export function isTimeoutError(error: unknown): error is TimeoutError {
   return error instanceof TimeoutError

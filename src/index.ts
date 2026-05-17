@@ -1,19 +1,19 @@
-import { FliteClient } from "./client"
-import type { RequestConfig, FliteResponse } from "./types"
+import { GlydeClient } from "./client"
+import type { RequestConfig, GlydeResponse } from "./types"
 
 export {
-  FliteError,
+  GlydeError,
   TimeoutError,
   NetworkError,
   HttpError,
-  isFliteError,
+  isGlydeError,
   isTimeoutError,
   isHttpError,
 } from "./errors"
 export type {
   RequestConfig,
-  FliteResponse,
-  FliteInstance,
+  GlydeResponse,
+  GlydeInstance,
   HttpMethod,
   RequestInterceptor,
   ResponseInterceptor,
@@ -23,17 +23,17 @@ export type {
 export type Plane = ReturnType<typeof plane>
 
 export function plane(config: RequestConfig = {}) {
-  const core = new FliteClient(config)
+  const core = new GlydeClient(config)
 
   return {
-    request<T = unknown>(rc: RequestConfig): Promise<FliteResponse<T>> {
+    request<T = unknown>(rc: RequestConfig): Promise<GlydeResponse<T>> {
       return core.request<T>(rc)
     },
 
     get<T = unknown>(
       url: string,
       rc: RequestConfig = {},
-    ): Promise<FliteResponse<T>> {
+    ): Promise<GlydeResponse<T>> {
       return core.request<T>({ ...rc, method: "GET", url })
     },
 
@@ -41,7 +41,7 @@ export function plane(config: RequestConfig = {}) {
       url: string,
       data?: unknown,
       rc: RequestConfig = {},
-    ): Promise<FliteResponse<T>> {
+    ): Promise<GlydeResponse<T>> {
       return core.request<T>({ ...rc, method: "POST", url, data })
     },
 
@@ -49,7 +49,7 @@ export function plane(config: RequestConfig = {}) {
       url: string,
       data?: unknown,
       rc: RequestConfig = {},
-    ): Promise<FliteResponse<T>> {
+    ): Promise<GlydeResponse<T>> {
       return core.request<T>({ ...rc, method: "PUT", url, data })
     },
 
@@ -57,21 +57,21 @@ export function plane(config: RequestConfig = {}) {
       url: string,
       data?: unknown,
       rc: RequestConfig = {},
-    ): Promise<FliteResponse<T>> {
+    ): Promise<GlydeResponse<T>> {
       return core.request<T>({ ...rc, method: "PATCH", url, data })
     },
 
     delete<T = unknown>(
       url: string,
       rc: RequestConfig = {},
-    ): Promise<FliteResponse<T>> {
+    ): Promise<GlydeResponse<T>> {
       return core.request<T>({ ...rc, method: "DELETE", url })
     },
 
     head<T = unknown>(
       url: string,
       rc: RequestConfig = {},
-    ): Promise<FliteResponse<T>> {
+    ): Promise<GlydeResponse<T>> {
       return core.request<T>({ ...rc, method: "HEAD", url })
     },
 
@@ -79,14 +79,14 @@ export function plane(config: RequestConfig = {}) {
       url: string,
       formData: FormData,
       rc: RequestConfig = {},
-    ): Promise<FliteResponse<T>> {
+    ): Promise<GlydeResponse<T>> {
       return core.request<T>({ ...rc, method: "POST", url, data: formData })
     },
 
     stream(
       url: string,
       rc: RequestConfig = {},
-    ): Promise<FliteResponse<ReadableStream>> {
+    ): Promise<GlydeResponse<ReadableStream>> {
       return core.request<ReadableStream>({
         ...rc,
         method: "GET",

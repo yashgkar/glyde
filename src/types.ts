@@ -20,7 +20,7 @@ export interface RequestConfig {
   withCredentials?: boolean
 }
 
-export interface FliteResponse<T = unknown> {
+export interface GlydeResponse<T = unknown> {
   data: T
   status: number
   statusText: string
@@ -28,41 +28,41 @@ export interface FliteResponse<T = unknown> {
   config: RequestConfig
 }
 
-export interface FliteInstance {
+export interface GlydeInstance {
   get<T = unknown>(
     url: string,
     config?: RequestConfig,
-  ): Promise<FliteResponse<T>>
+  ): Promise<GlydeResponse<T>>
   post<T = unknown>(
     url: string,
     data?: unknown,
     config?: RequestConfig,
-  ): Promise<FliteResponse<T>>
+  ): Promise<GlydeResponse<T>>
   put<T = unknown>(
     url: string,
     data?: unknown,
     config?: RequestConfig,
-  ): Promise<FliteResponse<T>>
+  ): Promise<GlydeResponse<T>>
   patch<T = unknown>(
     url: string,
     data?: unknown,
     config?: RequestConfig,
-  ): Promise<FliteResponse<T>>
+  ): Promise<GlydeResponse<T>>
   delete<T = unknown>(
     url: string,
     config?: RequestConfig,
-  ): Promise<FliteResponse<T>>
+  ): Promise<GlydeResponse<T>>
   head<T = unknown>(
     url: string,
     config?: RequestConfig,
-  ): Promise<FliteResponse<T>>
-  request<T = unknown>(config: RequestConfig): Promise<FliteResponse<T>>
+  ): Promise<GlydeResponse<T>>
+  request<T = unknown>(config: RequestConfig): Promise<GlydeResponse<T>>
 }
 
 export type RequestInterceptor = (
   config: RequestConfig,
 ) => RequestConfig | Promise<RequestConfig>
 export type ResponseInterceptor<T = unknown> = (
-  response: FliteResponse<T>,
-) => FliteResponse<T> | Promise<FliteResponse<T>>
+  response: GlydeResponse<T>,
+) => GlydeResponse<T> | Promise<GlydeResponse<T>>
 export type ErrorInterceptor = (error: unknown) => unknown

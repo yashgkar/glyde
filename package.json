@@ -1,15 +1,14 @@
 {
-  "name": "flite",
-  "version": "0.2.0",
-  "description": "A lightweight, TypeScript-first HTTP client — zero dependencies. Built on the native fetch API.",
-  "author": "Yash Garudkar",
+  "name": "glyde",
+  "version": "0.1.0",
+  "description": "A lightweight, TypeScript-first HTTP client — zero dependencies. Built on native fetch.",
+  "author": "Yash Garudkar <garudkary@gmail.com>",
   "license": "MIT",
   "keywords": [
     "http",
     "fetch",
     "client",
     "typescript",
-    "axios-alternative",
     "zero-dependencies"
   ],
   "type": "module",

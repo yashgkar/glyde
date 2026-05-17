@@ -30,10 +30,10 @@ describe("URL building", () => {
 
   it("appends query params", async () => {
     const api = plane({ baseURL: "http://api.test" })
-    await api.get("/search", { params: { q: "flite", page: 1 } })
+    await api.get("/search", { params: { q: "glyde", page: 1 } })
 
     const url = fetchSpy.mock.calls[0][0] as string
-    expect(url).toContain("q=flite")
+    expect(url).toContain("q=glyde")
     expect(url).toContain("page=1")
     expect(url).toMatch(/^http:\/\/api\.test\/search\?/)
   })

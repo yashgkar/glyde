@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, afterEach } from "vitest"
 import plane, {
-  isFliteError,
+  isGlydeError,
   isHttpError,
   isTimeoutError,
-  FliteError,
+  GlydeError,
   HttpError,
   TimeoutError,
   NetworkError,
@@ -64,7 +64,7 @@ describe("errors", () => {
     await expect(api.get("/down")).rejects.toThrow(NetworkError)
   })
 
-  it("error hierarchy: HttpError extends FliteError", async () => {
+  it("error hierarchy: HttpError extends GlydeError", async () => {
     stubFetch(mockFetch({}, { status: 500, statusText: "Internal Server Error" }))
 
     const api = plane()
@@ -73,9 +73,9 @@ describe("errors", () => {
       await api.get("http://api.test/error")
       expect.unreachable()
     } catch (err) {
-      expect(isFliteError(err)).toBe(true)
+      expect(isGlydeError(err)).toBe(true)
       expect(isHttpError(err)).toBe(true)
-      expect(err instanceof FliteError).toBe(true)
+      expect(err instanceof GlydeError).toBe(true)
       expect(err instanceof HttpError).toBe(true)
     }
   })

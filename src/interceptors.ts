@@ -3,7 +3,7 @@ import type {
   ResponseInterceptor,
   ErrorInterceptor,
   RequestConfig,
-  FliteResponse,
+  GlydeResponse,
 } from "./types"
 
 interface Handler<T> {
@@ -60,9 +60,9 @@ export class InterceptorChain {
   }
 
   async runResponse<T>(
-    response: FliteResponse<T>,
-  ): Promise<FliteResponse<T>> {
-    let result = response as FliteResponse
+    response: GlydeResponse<T>,
+  ): Promise<GlydeResponse<T>> {
+    let result = response as GlydeResponse
     const handlers: Array<Handler<ResponseInterceptor>> = []
     this.response.forEach((h) => handlers.push(h))
 
@@ -77,6 +77,6 @@ export class InterceptorChain {
         }
       }
     }
-    return result as FliteResponse<T>
+    return result as GlydeResponse<T>
   }
 }

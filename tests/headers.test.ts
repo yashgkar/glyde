@@ -24,11 +24,11 @@ describe("headers", () => {
   })
 
   it("merges per-request headers with defaults", async () => {
-    const api = plane({ headers: { "X-App": "flite" } })
+    const api = plane({ headers: { "X-App": "glyde" } })
     await api.get("http://api.test/data", { headers: { "X-Request": "1" } })
 
     const headers = fetchSpy.mock.calls[0][1].headers
-    expect(headers["X-App"]).toBe("flite")
+    expect(headers["X-App"]).toBe("glyde")
     expect(headers["X-Request"]).toBe("1")
     expect(headers["Content-Type"]).toBe("application/json")
   })

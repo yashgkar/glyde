@@ -1,18 +1,18 @@
 <p align="center">
-  <h1 align="center">flite</h1>
+  <h1 align="center">glyde</h1>
   <p align="center">A lightweight, TypeScript-first HTTP client built on native <code>fetch</code>. Zero dependencies.</p>
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/flite"><img src="https://img.shields.io/npm/v/flite" alt="npm version" /></a>
-  <a href="https://github.com/yashgarudkar/flite/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/flite" alt="license" /></a>
-  <a href="https://www.npmjs.com/package/flite"><img src="https://img.shields.io/bundlephobia/minzip/flite" alt="bundle size" /></a>
+  <a href="https://www.npmjs.com/package/glyde"><img src="https://img.shields.io/npm/v/glyde" alt="npm version" /></a>
+  <a href="https://github.com/yashgarudkar/glyde/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/glyde" alt="license" /></a>
+  <a href="https://www.npmjs.com/package/glyde"><img src="https://img.shields.io/bundlephobia/minzip/glyde" alt="bundle size" /></a>
   <img src="https://img.shields.io/badge/dependencies-0-green" alt="zero dependencies" />
 </p>
 
 ---
 
-## Why flite?
+## Why glyde?
 
 - **Zero dependencies** — no supply chain risk, no transitive vulnerabilities
 - **Built on native `fetch`** — works in browsers, Node.js 18+, Bun, Deno
@@ -24,21 +24,21 @@
 ## Install
 
 ```bash
-npm install flite
+npm install glyde
 ```
 
 ```bash
-pnpm add flite
+pnpm add glyde
 ```
 
 ```bash
-yarn add flite
+yarn add glyde
 ```
 
 ## Quick Start
 
 ```ts
-import plane from "flite"
+import plane from "glyde"
 
 const api = plane({ baseURL: "https://api.example.com/v1" })
 
@@ -49,7 +49,7 @@ const { data } = await api.get<User[]>("/users")
 await api.post<User>("/users", { name: "Yash" })
 
 // With query params
-await api.get("/search", { params: { q: "flite", page: 1 } })
+await api.get("/search", { params: { q: "glyde", page: 1 } })
 ```
 
 ## API
@@ -59,9 +59,9 @@ await api.get("/search", { params: { q: "flite", page: 1 } })
 Creates a new HTTP client instance. Every call returns an independent instance with its own config and interceptors.
 
 ```ts
-import plane from "flite"
+import plane from "glyde"
 // or
-import { plane } from "flite"
+import { plane } from "glyde"
 
 const api = plane({
   baseURL: "https://api.example.com",
@@ -85,10 +85,10 @@ const api = plane({
 | `upload`  | `api.upload<T>(url, formData, config?)` |
 | `stream`  | `api.stream(url, config?)`              |
 
-Every method returns `Promise<FliteResponse<T>>`:
+Every method returns `Promise<GlydeResponse<T>>`:
 
 ```ts
-interface FliteResponse<T> {
+interface GlydeResponse<T> {
   data: T
   status: number
   statusText: string
@@ -166,10 +166,10 @@ api.interceptors.request.eject(id)
 
 ## Error Handling
 
-flite throws typed errors you can catch precisely:
+glyde throws typed errors you can catch precisely:
 
 ```ts
-import { isHttpError, isTimeoutError, isFliteError } from "flite"
+import { isHttpError, isTimeoutError, isGlydeError } from "glyde"
 
 try {
   await api.get("/data")
@@ -184,8 +184,8 @@ try {
     // request exceeded timeout
   }
 
-  if (isFliteError(err)) {
-    // any flite error (network, timeout, http)
+  if (isGlydeError(err)) {
+    // any glyde error (network, timeout, http)
   }
 }
 ```
@@ -193,7 +193,7 @@ try {
 ### Error hierarchy
 
 ```
-FliteError (base)
+GlydeError (base)
 ├── HttpError      — non-2xx response (status, response, config)
 ├── TimeoutError   — request exceeded timeout
 └── NetworkError   — fetch failed (DNS, offline, CORS)
@@ -241,13 +241,13 @@ api.get("/slow", { timeout: 10000 })
 
 ## Next.js Usage
 
-flite is framework-agnostic, but here's the recommended pattern for Next.js App Router.
+glyde is framework-agnostic, but here's the recommended pattern for Next.js App Router.
 
 ### Server instance (tower)
 
 ```ts
 // lib/api/server.ts
-import plane from "flite"
+import plane from "glyde"
 import { cookies } from "next/headers"
 
 export async function tower() {
@@ -271,7 +271,7 @@ export async function tower() {
 ```ts
 // lib/api/client.ts
 "use client"
-import plane from "flite"
+import plane from "glyde"
 
 export const passenger = plane({ baseURL: "/api/proxy" })
 

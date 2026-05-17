@@ -1,4 +1,4 @@
-import type { RequestConfig, FliteResponse, FliteInstance } from "./types"
+import type { RequestConfig, GlydeResponse, GlydeInstance } from "./types"
 import { InterceptorChain } from "./interceptors"
 import { TimeoutError, NetworkError, HttpError } from "./errors"
 
@@ -27,7 +27,7 @@ function shouldSetContentType(data: unknown): boolean {
   return true
 }
 
-export class FliteClient implements FliteInstance {
+export class GlydeClient implements GlydeInstance {
   private defaults: RequestConfig
   public interceptors: InterceptorChain
 
@@ -97,7 +97,7 @@ export class FliteClient implements FliteInstance {
 
   async request<T = unknown>(
     config: RequestConfig,
-  ): Promise<FliteResponse<T>> {
+  ): Promise<GlydeResponse<T>> {
     let mergedConfig = this.mergeConfig(config)
     mergedConfig = await this.interceptors.runRequest(mergedConfig)
 
@@ -153,7 +153,7 @@ export class FliteClient implements FliteInstance {
 
     // Stream — return raw ReadableStream without consuming it
     if (responseType === "stream") {
-      const response: FliteResponse<T> = {
+      const response: GlydeResponse<T> = {
         data: rawResponse.body as unknown as T,
         status: rawResponse.status,
         statusText: rawResponse.statusText,
@@ -161,7 +161,7 @@ export class FliteClient implements FliteInstance {
         config: mergedConfig,
       }
       if (!rawResponse.ok)
-        throw new HttpError(mergedConfig, response as FliteResponse)
+        throw new HttpError(mergedConfig, response as GlydeResponse)
       return this.interceptors.runResponse(response)
     }
 
@@ -187,7 +187,7 @@ export class FliteClient implements FliteInstance {
       responseData = null as unknown as T
     }
 
-    const response: FliteResponse<T> = {
+    const response: GlydeResponse<T> = {
       data: responseData,
       status: rawResponse.status,
       statusText: rawResponse.statusText,
@@ -196,51 +196,51 @@ export class FliteClient implements FliteInstance {
     }
 
     if (!rawResponse.ok)
-      throw new HttpError(mergedConfig, response as FliteResponse)
+      throw new HttpError(mergedConfig, response as GlydeResponse)
     return this.interceptors.runResponse(response)
   }
 
   get<T = unknown>(
     url: string,
     config: RequestConfig = {},
-  ): Promise<FliteResponse<T>> {
+  ): Promise<GlydeResponse<T>> {
     return this.request<T>({ ...config, method: "GET", url })
   }
   post<T = unknown>(
     url: string,
     data?: unknown,
     config: RequestConfig = {},
-  ): Promise<FliteResponse<T>> {
+  ): Promise<GlydeResponse<T>> {
     return this.request<T>({ ...config, method: "POST", url, data })
   }
   put<T = unknown>(
     url: string,
     data?: unknown,
     config: RequestConfig = {},
-  ): Promise<FliteResponse<T>> {
+  ): Promise<GlydeResponse<T>> {
     return this.request<T>({ ...config, method: "PUT", url, data })
   }
   patch<T = unknown>(
     url: string,
     data?: unknown,
     config: RequestConfig = {},
-  ): Promise<FliteResponse<T>> {
+  ): Promise<GlydeResponse<T>> {
     return this.request<T>({ ...config, method: "PATCH", url, data })
   }
   delete<T = unknown>(
     url: string,
     config: RequestConfig = {},
-  ): Promise<FliteResponse<T>> {
+  ): Promise<GlydeResponse<T>> {
     return this.request<T>({ ...config, method: "DELETE", url })
   }
   head<T = unknown>(
     url: string,
     config: RequestConfig = {},
-  ): Promise<FliteResponse<T>> {
+  ): Promise<GlydeResponse<T>> {
     return this.request<T>({ ...config, method: "HEAD", url })
   }
-  create(config: RequestConfig = {}): FliteClient {
-    return new FliteClient({
+  create(config: RequestConfig = {}): GlydeClient {
+    return new GlydeClient({
       ...this.defaults,
       ...config,
       headers: {
