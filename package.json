@@ -4,12 +4,23 @@
   "description": "A lightweight, TypeScript-first HTTP client — zero dependencies. Built on native fetch.",
   "author": "Yash Garudkar <garudkary@gmail.com>",
   "license": "MIT",
+  "homepage": "https://glydeapi.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yashgkar/glyde"
+  },
   "keywords": [
     "http",
     "fetch",
     "client",
     "typescript",
-    "zero-dependencies"
+    "zero-dependencies",
+    "axios-alternative",
+    "fetch-wrapper",
+    "http-request",
+    "nextjs",
+    "typed-errors",
+    "interceptors"
   ],
   "type": "module",
   "main": "dist/index.cjs.js",
